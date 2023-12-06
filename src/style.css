@@ -110,6 +110,11 @@ button:focus-visible {
   height: 36rem;
 }
 
+#videoComponent {
+  width: 64rem;
+  height: 36rem;
+}
+
 .icon {
   margin-top: 12rem;
   width: 10rem;
