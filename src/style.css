@@ -94,3 +94,24 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* App style */
+#nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+#video {
+  margin-top: 2rem;
+  background-color: #750E21;
+  width: 64rem;
+  height: 36rem;
+}
+
+.icon {
+  margin-top: 12rem;
+  width: 10rem;
+  fill: #E3651D;
+}
