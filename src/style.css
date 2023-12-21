@@ -36,9 +36,7 @@ h1 {
 }
 
 #app {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -97,14 +95,30 @@ button:focus-visible {
 
 /* App style */
 #nav {
-  position: fixed;
+  position: flex;
   top: 0;
   left: 0;
   width: 100%;
+  margin-top: 0;
+}
+
+#container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100rem;
+}
+
+#room {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 0 5rem;
 }
 
 #video {
-  margin-top: 2rem;
   background-color: #750E21;
   width: 64rem;
   height: 36rem;
@@ -119,4 +133,42 @@ button:focus-visible {
   margin-top: 12rem;
   width: 10rem;
   fill: #E3651D;
+}
+
+.hidden {
+  display: none;
+}
+
+#memberList {
+  background-color: #750E21;
+  border-radius: 0.5rem;
+}
+
+.member {
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+
+.member:nth-child(odd) {
+  background-color: #750E88;
+}
+
+.member button {
+  background-color: #092635;
+  border: none;
+  border-radius: 0.5rem;
+  color: #AE445A;
+  cursor: pointer;
+  font-weight: bold;
+  margin: 0.5rem;
+  padding: 0.5rem;
+}
+
+.member button:hover {
+  background-color: #011220;
+  color: #AE445A;
+  transition: 0.5s ease;
 }
