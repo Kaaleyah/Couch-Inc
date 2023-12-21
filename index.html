@@ -2,13 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Couch Inc</title>
   </head>
   <body>
     <div id="app">
+
       <div id="nav">
         <h1>Couch Inc.</h1>
       </div>
@@ -17,7 +17,24 @@
         <div id="video">
         </div>
 
-        <input type="file" id="videoInput" accept="video/*">
+        <div id="room">
+        
+          <div id="roomContainer">
+            <input type="text" id="roomID">
+            <br>
+            <button id="joinRoom">Join Room</button>
+          </div>
+
+          <div id="membersContainer" class="hidden">
+            <input class="hidden" type="file" id="videoInput" accept="video/*">
+            <br>
+            <br>
+            <div id="memberList">
+
+            </div>
+          </div>
+        </div>
+        
       </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
