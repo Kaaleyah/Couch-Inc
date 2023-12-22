@@ -2,19 +2,19 @@ import { ownID } from "./socket";
 import { setUpWatch } from "./video";
 
 const configuration = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] };
+const peerConnection = new RTCPeerConnection(configuration);
+export var controlChannel: RTCDataChannel;
 
 export async function sendOffer(memberID: string, socket: any) {
-    const peerConnection = new RTCPeerConnection(configuration);
-
-    const controlChannel = peerConnection.createDataChannel('videoControls');
+    controlChannel = peerConnection.createDataChannel('videoControls');
 
     controlChannel.onopen = () => {
         console.log('Control channel is open');
         setUpWatch()
-    }
-
-    controlChannel.onmessage = (event) => {
-        console.log(`Control message: ${event.data}`);
+        
+        controlChannel.onmessage = (event) => {
+            console.log(`Control message: ${event.data}`);
+        }
     }
 
     peerConnection.oniceconnectionstatechange = () => {
@@ -49,18 +49,17 @@ export async function sendOffer(memberID: string, socket: any) {
 export async function listenForOffer(socket: any) {
     socket.on("offerSDP", (senderID: string, offerSDP: any) => {
         console.log(`Offer SDP: ${JSON.stringify(offerSDP)}`);
-        const peerConnection = new RTCPeerConnection(configuration);
 
         peerConnection.ondatachannel = (event) => {
-            const controlChannel = event.channel;
+            controlChannel = event.channel;
 
             controlChannel.onopen = () => {
                 console.log('Control channel is open');
                 setUpWatch()
-            }
 
-            controlChannel.onmessage = (event) => {
-                console.log(`Control message: ${event.data}`);
+                controlChannel.onmessage = (event) => {
+                    console.log(`Control message: ${event.data}`);
+                }
             }
         }
 
@@ -98,4 +97,8 @@ export async function listenForAnswer(socket: any, peerConnection: RTCPeerConnec
         console.log(`Answer SDP: ${JSON.stringify(answerSDP)}`);
         peerConnection.setRemoteDescription(answerSDP);
     })
+}
+
+export async function listenToVideoControls() {
+
 }

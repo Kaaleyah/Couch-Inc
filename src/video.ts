@@ -1,3 +1,5 @@
+import { controlChannel } from "./rtc"
+
 export function setVideoPlaceholder() {
   let videoContainer = document.querySelector<HTMLDivElement>('#video')
   let icon = document.createElement('img')
@@ -13,6 +15,9 @@ export function setUpWatch() {
   joinButtons.forEach((joinButton) => {
     joinButton.className = 'hidden'  
   })
+
+  let videoInput = document.querySelector<HTMLInputElement>('#videoInput')
+  videoInput?.classList.remove('hidden')
 }
 
 export function setVideo() {
@@ -40,14 +45,35 @@ export function listenToControls() {
 
   video?.addEventListener('play', () => {
     console.log('play')
+    controlChannel.send(`play-${video?.currentTime.toFixed(2)}`)
   })
 
   video?.addEventListener('pause', () => {
     console.log('pause')
+    controlChannel.send(`pause-${video?.currentTime.toFixed(2)}`)
   })
 
   video?.addEventListener('timeupdate', () => {
     var currentTime = video?.currentTime;
     //console.log('Current Time: ' + currentTime?.toFixed(2) + ' seconds');
   })
+
+  handleVideoControls(video)
+}
+
+function handleVideoControls(video: HTMLVideoElement | null) {
+  controlChannel.onmessage = (event) => {
+    const [command, time] = event.data.split('-')
+    console.log(`Control message: ${command + ' ' + time}`);
+    if (video) {
+
+      if (video.currentTime - time > 0.5 || video.currentTime - time < -0.5)
+      video.currentTime = parseFloat(time)
+      if (command == 'play') {
+        video?.play()
+      } else if (command == 'pause') {
+        video?.pause()
+      }
+    }
+  }
 }
