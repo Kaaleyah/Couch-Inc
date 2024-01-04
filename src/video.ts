@@ -1,4 +1,4 @@
-import { controlChannel } from "./rtc"
+import { controlChannel, sendVideo } from "./rtc"
 
 export function setVideoPlaceholder() {
   let videoContainer = document.querySelector<HTMLDivElement>('#video')
@@ -34,8 +34,11 @@ export function setVideo() {
     if (videoInput?.files && videoInput?.files[0]) {
       videoComponent?.setAttribute('src', URL.createObjectURL(videoInput.files[0]))
       videoComponent?.setAttribute('controls', 'true')
+      //videoComponent.muted = true
 
-      listenToControls()
+      sendVideo(videoComponent)
+
+      //listenToControls()
     }
   })
 }
